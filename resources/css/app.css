@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.select2-container { width: 100% !important; }
+.dataTables_wrapper { @apply text-sm; }
