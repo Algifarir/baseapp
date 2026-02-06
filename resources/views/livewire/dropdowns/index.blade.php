@@ -1,3 +1,87 @@
-<div>
-    {{-- It is quality rather than quantity that matters. - Lucius Annaeus Seneca --}}
+<div x-data="{ openModal: false }">
+    <div class="mb-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <a href="{{ route('home.index') }}" wire:navigate
+                class="inline-flex items-center justify-center rounded bg-gray-100 px-2.5 py-1.5 text-gray-700 hover:bg-gray-100"
+                aria-label="Back to Home" title="Back to Home">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2 class="text-xl font-semibold">Dropdowns</h2>
+        </div>
+        <button data-prevent-double wire:click="create" @click="openModal = true"
+            class="rounded bg-blue-600 px-4 py-2 text-white">
+            Add Dropdown
+        </button>
+    </div>
+
+    <div class="overflow-x-auto rounded bg-white shadow">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3 text-left">Category</th>
+                    <th class="p-3 text-left">Name Value</th>
+                    <th class="p-3 text-left">Code Format</th>
+                    <th class="p-3 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($items as $item)
+                    <tr class="border-t">
+                        <td class="p-3">{{ $item->category }}</td>
+                        <td class="p-3">{{ $item->name_value }}</td>
+                        <td class="p-3">{{ $item->code_format }}</td>
+                        <td class="space-x-2 p-3">
+                            <button data-prevent-double wire:click="edit({{ $item->id }})" @click="openModal = true"
+                                class="text-blue-600">
+                                Edit
+                            </button>
+
+                            <button data-prevent-double
+                                @click="$dispatch('confirm', { id: {{ $item->id }}, message: 'Delete this dropdown?' })"
+                                class="text-red-600">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    {{-- MODAL --}}
+    <div x-cloak x-show="openModal" x-transition
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+
+        <div class="w-full max-w-md rounded-lg bg-white p-6">
+
+            <h3 class="mb-4 text-lg font-semibold">
+                {{ $editingId ? 'Edit Dropdown' : 'Add Dropdown' }}
+            </h3>
+
+            <div class="mb-3">
+                <label class="text-sm">Category</label>
+                <input type="text" wire:model="category" class="w-full rounded border p-2">
+            </div>
+
+            <div class="mb-3">
+                <label class="text-sm">Name Value</label>
+                <input type="text" wire:model="name_value" class="w-full rounded border p-2">
+            </div>
+
+            <div class="mb-3">
+                <label class="text-sm">Code Format</label>
+                <input type="text" wire:model="code_format" class="w-full rounded border p-2">
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button @click="openModal=false" class="rounded border px-4 py-2">Cancel</button>
+
+                <button data-prevent-double wire:click="save" @click="openModal=false"
+                    class="rounded bg-blue-600 px-4 py-2 text-white">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
