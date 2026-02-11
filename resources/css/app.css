@@ -1,7 +1,9 @@
+/* Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-.select2-container { width: 100% !important; }
-.dataTables_wrapper { @apply text-sm; }
+/* Custom CSS */
+.select2-container {
+    width: 100% !important;
+}

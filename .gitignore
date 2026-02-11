@@ -22,7 +22,6 @@
 
 # Public
 /public/storage
-/public/hot
 
 # Cache & compiled
 /bootstrap/cache/*
