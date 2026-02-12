@@ -63,6 +63,8 @@ class Index extends Component
     {
         return view('livewire.dropdowns.index', [
             'items' => app(DropdownService::class)->all(),
-        ]);
+        ])
+        ->extends('layouts.app')
+        ->section('content');
     }
 }
